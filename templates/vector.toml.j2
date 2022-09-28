@@ -1,0 +1,17 @@
+[sources.service]
+  type = "http"
+  address = "0.0.0.0:1337"
+
+[sinks.clickhouse]
+  type = "clickhouse"
+  inputs = ["service"]
+  skip_unknown_fields = true
+  endpoint = "http://{{ hostvars['clickhouse.vm'].ansible_host }}:8123"
+  database = "{{ clickhouse_database }}"
+  table = "{{ clickhouse_table }}"
+
+[sinks.console]
+  type = "console"
+  inputs = ["service"]
+  encoding.codec = "json"
+

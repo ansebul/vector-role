@@ -1,0 +1,25 @@
+---
+# tasks file for vector-role
+  - name: Install Vector repository
+    shell: curl -1sLf 'https://repositories.timber.io/public/vector/cfg/setup/bash.deb.sh' | sudo -E bash
+    tags: vector
+  - name: Install Vector
+    apt:
+      package={{ item }}
+      state=present
+      update_cache=yes
+    with_items:
+      - vector
+    tags: vector
+  - name: Upload Vector config
+    template:
+      src: templates/vector.toml.j2
+      dest: /etc/vector/vector.toml
+      mode: 0774
+    tags: vector
+  - name: "Run Vector"
+    systemd:
+      name: vector
+      state: started
+      enabled: true
+    tags: vector
