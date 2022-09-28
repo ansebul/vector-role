@@ -16,7 +16,7 @@ Role Variables
 Dependencies
 ------------
 
-Зависимостей нет
+Зависимостей нет.
 
 License
 -------
